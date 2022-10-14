@@ -1,0 +1,22 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "n:aws:ecs:us-west-2:254011110770:task-definition/Shiv-demo:1"
+        LoadBalancerInfo:
+          ContainerName: "shiv-website"
+          ContainerPort: 8080
+# Optional properties
+        PlatformVersion: "LATEST"
+        NetworkConfiguration:
+            AwsvpcConfiguration:
+              Subnets: ["sprivate1", "sprivate2"]
+              SecurityGroups: ["gokulasec"]
+              AssignPublicIp: "ENABLED"
+Hooks:
+- BeforeInstall: "BeforeInstallHookFunctionName"
+- AfterInstall: "AfterInstallHookFunctionName"
+- AfterAllowTestTraffic: "AfterAllowTestTrafficHookFunctionName"
+- BeforeAllowTraffic: "BeforeAllowTrafficHookFunctionName"
+- AfterAllowTraffic: "AfterAllowTrafficHookFunctionName"
